@@ -1,1938 +1,689 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Typing Defender - Cổng Game Học Từ Vựng Vũ Trụ</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            50: '#ecfeff',
-                            100: '#cffaff',
-                            400: '#22d3ee',
-                            500: '#06b6d4',
-                            900: '#083344',
-                            950: '#030712'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Chakra+Petch:wght@600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Be Vietnam Pro', sans-serif;
-            background-color: #030712;
-            color: #f8fafc;
-            overflow-x: hidden;
-        }
-        .font-orbitron {
-            font-family: 'Chakra Petch', sans-serif;
-            letter-spacing: 0.04em;
-        }
-        .neon-glow-cyan {
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.35);
-        }
-        .neon-text-pink {
-            text-shadow: 0 0 10px rgba(236, 72, 153, 0.7);
-        }
-        .glass-card {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .glass-nav {
-            background: rgba(3, 7, 18, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.8; }
-        }
-        .animate-pulse-glow {
-            animation: pulseGlow 4s infinite ease-in-out;
-        }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: #06b6d4; border-radius: 3px; }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-slate-950">
-
-    <!-- Global Header / Navbar -->
-    <header class="sticky top-0 z-50 glass-nav transition-all">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-pink-500 flex items-center justify-center text-xl shadow-lg shadow-cyan-500/20">
-                    🚀
-                </div>
-                <div>
-                    <span class="font-orbitron font-extrabold text-lg sm:text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-pink-500">
-                        SPACE TYPER
-                    </span>
-                    <span class="hidden sm:inline-block text-[10px] uppercase font-bold tracking-widest text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded-full border border-cyan-500/30 ml-2">
-                        ACADEMY
-                    </span>
-                </div>
-            </div>
-
-            <!-- Nav Links -->
-            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
-                <a href="#play-zone" class="hover:text-cyan-400 transition flex items-center gap-1.5">
-                    🎮 <span>Chơi Game</span>
-                </a>
-                <a href="#vocab-library" class="hover:text-cyan-400 transition flex items-center gap-1.5">
-                    📚 <span>Kho Từ Vựng</span>
-                </a>
-                <a href="#leaderboard" class="hover:text-cyan-400 transition flex items-center gap-1.5">
-                    🏆 <span>Bảng Xếp Hạng</span>
-                </a>
-                <a href="#deploy-guide" class="hover:text-pink-400 transition flex items-center gap-1.5 text-pink-300">
-                    🌐 <span>Đưa Web Lên Mạng</span>
-                </a>
-            </nav>
-
-            <!-- Action Buttons -->
-            <div class="flex items-center gap-2">
-                <button onclick="openDeployModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold font-orbitron bg-gradient-to-r from-cyan-500 to-pink-500 text-slate-950 hover:brightness-110 active:scale-95 transition shadow-md shadow-cyan-500/20">
-                    🚀 ĐĂNG WEB MIỄN PHÍ
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden pt-12 pb-8 sm:pt-16 sm:pb-12 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-        <!-- Ambient Background Light Effects -->
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-glow"></div>
-        <div class="absolute top-1/3 right-10 w-[300px] h-[300px] bg-pink-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card border-cyan-500/40 mb-4 text-xs font-semibold text-cyan-300">
-                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-                <span>Game Luyện Gõ Từ Vựng Vũ Trụ V2.0 - Tích Hợp Gemini AI</span>
-            </div>
-
-            <h1 class="font-orbitron font-black text-3xl sm:text-5xl lg:text-6xl text-slate-100 tracking-tight max-w-4xl mx-auto leading-tight">
-                VỪA CHƠI GAME VỪA Luyện Từ Vựng <br class="hidden sm:block">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-pink-500">
-                    TỐC ĐỘ CAO TRÊN VŨ TRỤ
-                </span>
-            </h1>
-
-            <p class="mt-4 text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-                Tiêu diệt các thiên thạch bằng kỹ năng gõ phím nhanh nhẹn. Tích hợp âm nhạc Synthwave sôi động, tùy chỉnh danh sách từ vựng riêng và tạo bằng AI thông minh!
-            </p>
-
-            <div class="mt-6 flex flex-wrap justify-center items-center gap-4">
-                <a href="#play-zone" class="px-6 py-3.5 rounded-2xl font-orbitron font-bold text-sm text-slate-950 bg-gradient-to-r from-cyan-400 via-teal-300 to-pink-400 hover:scale-105 active:scale-95 transition shadow-lg shadow-cyan-500/30 flex items-center gap-2">
-                    ⚡ CHƠI NGAY BÂY GIỜ
-                </a>
-                <button onclick="scrollToGuide()" class="px-6 py-3.5 rounded-2xl font-orbitron font-bold text-sm text-slate-200 glass-card hover:bg-slate-800 border-slate-700 transition flex items-center gap-2">
-                    📖 HƯỚNG DẪN ĐƯA LÊN ONLINE
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Game Play Area (Arcade Cabinet View) -->
-    <section id="play-zone" class="py-6 sm:py-10 max-w-5xl mx-auto px-2 sm:px-4">
-        <div class="glass-card rounded-3xl p-3 sm:p-5 border border-cyan-500/30 neon-glow-cyan relative overflow-hidden">
-            
-            <!-- Cabinet Header Tools -->
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-800 px-2">
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
-                    <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
-                    <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
-                    <span class="ml-2 text-xs font-orbitron font-bold text-cyan-400 uppercase tracking-widest hidden sm:inline">
-                        ARCADE TERMINAL v2.5
-                    </span>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <button onclick="reloadGame()" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition flex items-center gap-1">
-                        🔄 <span>Tải lại game</span>
-                    </button>
-                    <button onclick="toggleCabinetFullscreen()" class="px-3 py-1 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 text-xs font-bold text-cyan-300 transition flex items-center gap-1">
-                        ⛶ <span>Toàn màn hình</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Integrated Game Container -->
-            <div id="cabinet-wrapper" class="relative w-full h-[680px] sm:h-[750px] bg-slate-950 rounded-2xl overflow-hidden flex justify-center items-center border border-slate-800">
-                <iframe id="game-iframe" srcdoc="" class="w-full h-full border-0"></iframe>
-            </div>
-
-            <div class="mt-3 flex flex-wrap justify-between items-center text-xs text-slate-400 px-2 gap-2">
-                <div>💡 Mẹo: Nhấn phím <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-cyan-300 font-mono">ENTER</kbd> để bắt đầu game hoặc tiếp tục.</div>
-                <div class="text-cyan-400 font-medium">Hỗ trợ đầy đủ Bàn phím Cảm ứng trên Điện thoại / Máy tính bảng</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Vocabulary Decks Section -->
-    <section id="vocab-library" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10">
-            <h2 class="font-orbitron font-extrabold text-2xl sm:text-3xl text-cyan-300 uppercase tracking-wider">
-                📚 THƯ VIỆN BỘ TỪ VỰNG CÓ SẴN
-            </h2>
-            <p class="text-slate-400 text-sm mt-2">
-                Chọn bộ chủ đề bạn muốn rèn luyện và nhấn "NẠP VÀO GAME" để bắt đầu ngay lập tức!
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Card 1: IELTS Academic -->
-            <div class="glass-card rounded-2xl p-5 border border-purple-500/30 hover:border-purple-400 transition group flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-3xl">🎓</span>
-                        <span class="text-[10px] font-orbitron font-bold px-2 py-1 rounded bg-purple-950 text-purple-300 border border-purple-500/40">CẤP ĐỘ NÂNG CAO</span>
-                    </div>
-                    <h3 class="font-orbitron font-bold text-lg text-purple-200 mb-2">IELTS Academic Target</h3>
-                    <p class="text-xs text-slate-400 mb-4">Các từ vựng học thuật xuất hiện nhiều trong kỳ thi IELTS như Hypothesis, Analyze, Phenomenon...</p>
-                </div>
-                <button onclick="loadPresetVocab('ielts')" class="w-full py-2.5 rounded-xl font-orbitron font-bold text-xs bg-purple-600/30 hover:bg-purple-600 text-purple-200 border border-purple-500/50 transition">
-                    ⚡ NẠP BỘ TỪ IELTS VÀO GAME
-                </button>
-            </div>
-
-            <!-- Card 2: Cyberpunk & Tech -->
-            <div class="glass-card rounded-2xl p-5 border border-cyan-500/30 hover:border-cyan-400 transition group flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-3xl">🤖</span>
-                        <span class="text-[10px] font-orbitron font-bold px-2 py-1 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/40">CÔNG NGHỆ VŨ TRỤ</span>
-                    </div>
-                    <h3 class="font-orbitron font-bold text-lg text-cyan-200 mb-2">Cyberpunk & AI Tech</h3>
-                    <p class="text-xs text-slate-400 mb-4">Từ vựng thuộc chủ đề Ma trận, Lượng tử, Mạng máy tính, Robot và Công nghệ Tương lai.</p>
-                </div>
-                <button onclick="loadPresetVocab('tech')" class="w-full py-2.5 rounded-xl font-orbitron font-bold text-xs bg-cyan-600/30 hover:bg-cyan-600 text-cyan-200 border border-cyan-500/50 transition">
-                    ⚡ NẠP BỘ TỪ TECH VÀO GAME
-                </button>
-            </div>
-
-            <!-- Card 3: Everyday English -->
-            <div class="glass-card rounded-2xl p-5 border border-pink-500/30 hover:border-pink-400 transition group flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-3xl">☕</span>
-                        <span class="text-[10px] font-orbitron font-bold px-2 py-1 rounded bg-pink-950 text-pink-300 border border-pink-500/40">GIAO TIẾP HẰNG NGÀY</span>
-                    </div>
-                    <h3 class="font-orbitron font-bold text-lg text-pink-200 mb-2">Daily Life & Travel</h3>
-                    <p class="text-xs text-slate-400 mb-4">Từ vựng giao tiếp thực tế về Du lịch, Mua sắm, Ẩm thực và Đời sống thường nhật.</p>
-                </div>
-                <button onclick="loadPresetVocab('daily')" class="w-full py-2.5 rounded-xl font-orbitron font-bold text-xs bg-pink-600/30 hover:bg-pink-600 text-pink-200 border border-pink-500/50 transition">
-                    ⚡ NẠP BỘ TỪ GIAO TIẾP VÀO GAME
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Deploy Guide Section -->
-    <section id="deploy-guide" class="py-12 bg-slate-900/60 border-t border-b border-slate-800">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10">
-                <span class="text-xs font-orbitron font-bold text-pink-400 uppercase tracking-widest px-3 py-1 rounded-full bg-pink-950/60 border border-pink-500/30">
-                    HƯỚNG DẪN ĐƯA WEB LÊN ONLINE
-                </span>
-                <h2 class="font-orbitron font-extrabold text-2xl sm:text-3xl text-slate-100 mt-3">
-                    Làm Thế Nào Để Đưa Trang Web Này Lên Mạng (Miễn Phí 100%)?
-                </h2>
-                <p class="text-slate-400 text-sm mt-2 max-w-2xl mx-auto">
-                    Bạn không cần mua Hosting hay Tên miền! Chỉ với 1 file <code class="text-cyan-300 font-mono">index.html</code> này, bạn có thể đưa game lên internet công khai cho bạn bè hoặc học sinh cùng chơi.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Option 1: Netlify Drag & Drop -->
-                <div class="glass-card rounded-2xl p-6 border border-cyan-500/30 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-3 mb-4">
-                            <span class="text-2xl font-orbitron font-black text-cyan-400 bg-cyan-950 p-2 rounded-xl border border-cyan-500/40">01</span>
-                            <div>
-                                <h3 class="font-orbitron font-bold text-base text-cyan-300">Cách 1: Kéo - Thả vào Netlify Drop (Nhanh nhất - 30 giây)</h3>
-                                <p class="text-xs text-slate-400">Không cần đăng ký tài khoản rườm rà!</p>
-                            </div>
-                        </div>
-                        <ol class="space-y-2 text-xs text-slate-300 list-decimal list-inside leading-relaxed">
-                            <li>Lưu file mã nguồn này thành tên <code class="text-cyan-300 font-mono">index.html</code> trên máy tính.</li>
-                            <li>Tạo 1 thư mục mới (ví dụ <code class="text-cyan-300 font-mono">my-typing-game</code>) và bỏ file <code class="text-cyan-300 font-mono">index.html</code> vào đó.</li>
-                            <li>Truy cập trang web miễn phí: <a href="https://app.netlify.com/drop" target="_blank" class="text-cyan-400 underline font-semibold">app.netlify.com/drop</a></li>
-                            <li>Kéo nguyên thư mục đó thả vào ô trên trang Netlify.</li>
-                            <li>Xong! Bạn sẽ nhận ngay 1 đường link trang web public dạng <code class="text-pink-400 font-mono">https://xxxx.netlify.app</code>!</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- Option 2: GitHub Pages -->
-                <div class="glass-card rounded-2xl p-6 border border-pink-500/30 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-3 mb-4">
-                            <span class="text-2xl font-orbitron font-black text-pink-400 bg-pink-950 p-2 rounded-xl border border-pink-500/40">02</span>
-                            <div>
-                                <h3 class="font-orbitron font-bold text-base text-pink-300">Cách 2: Đăng qua GitHub Pages (Bền vững lâu dài)</h3>
-                                <p class="text-xs text-slate-400">Dành cho bạn nào đã có tài khoản GitHub</p>
-                            </div>
-                        </div>
-                        <ol class="space-y-2 text-xs text-slate-300 list-decimal list-inside leading-relaxed">
-                            <li>Đăng nhập <a href="https://github.com" target="_blank" class="text-pink-400 underline font-semibold">GitHub.com</a> và tạo một Repository mới (ví dụ: <code class="text-pink-300 font-mono">space-typing</code>).</li>
-                            <li>Upload file <code class="text-pink-300 font-mono">index.html</code> vào Repository đó.</li>
-                            <li>Vào mục **Settings** -> chọn tab **Pages** ở menu bên trái.</li>
-                            <li>Tại phần **Branch**, chọn <code class="text-pink-300 font-mono">main</code> (hoặc master) và nhấn **Save**.</li>
-                            <li>Chờ khoảng 1 phút, GitHub sẽ cấp link dạng <code class="text-cyan-300 font-mono">https://username.github.io/space-typing</code>.</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="mt-auto py-8 border-t border-slate-900 bg-slate-950 text-center text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="font-orbitron font-bold text-slate-400">
-                🚀 SPACE TYPER ACADEMY &copy; 2026
-            </div>
-            <div>
-                Phát triển game học tiếng Anh tích hợp AI thông minh.
-            </div>
-        </div>
-    </footer>
-
-    <!-- Deploy Guide Modal -->
-    <div id="deploy-modal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex justify-center items-center p-4">
-        <div class="glass-card max-w-lg w-full rounded-2xl p-6 border border-cyan-500/40 relative">
-            <button onclick="closeDeployModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-lg">✕</button>
-            <h3 class="font-orbitron font-extrabold text-xl text-cyan-300 mb-3">🚀 Hướng Dẫn Nhanh Đưa Game Lên Online</h3>
-            <p class="text-xs text-slate-300 mb-4 leading-relaxed">
-                Trang web này đã được thiết kế nguyên khối trong 1 file HTML đơn nhất. Bạn có thể gửi file này trực tiếp cho bất kỳ ai hoặc tải lên trang lưu trữ miễn phí Netlify Drop.
-            </p>
-            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 mb-4">
-                <div class="text-[11px] text-cyan-400 font-bold mb-1">ĐƯỜNG DẪN ĐẾN NETLIFY DROP:</div>
-                <a href="https://app.netlify.com/drop" target="_blank" class="text-xs font-mono text-pink-400 underline break-all">https://app.netlify.com/drop</a>
-            </div>
-            <button onclick="closeDeployModal()" class="w-full py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-orbitron transition">
-                ĐÃ RÕ, CẢM ƠN!
-            </button>
-        </div>
-    </div>
-
-    <script>
-        // The complete self-contained Space Typing Defender game code inlined into Iframe
-        const INNER_GAME_HTML = `<!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Typing Defender</title>
-    <script src="https://cdn.tailwindcss.com"><\/script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Chakra+Petch:wght@600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Be Vietnam Pro', sans-serif;
-            background-color: #030712;
-            overflow: hidden;
-            user-select: none;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-        }
-        .orbitron { 
-            font-family: 'Chakra Petch', 'Be Vietnam Pro', sans-serif; 
-            letter-spacing: 0.03em;
-        }
-        .neon-border {
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4), inset 0 0 15px rgba(6, 182, 212, 0.2);
-            border: 1px solid rgba(6, 182, 212, 0.6);
-        }
-        .neon-text-cyan { text-shadow: 0 0 8px rgba(6, 182, 212, 0.8), 0 0 16px rgba(6, 182, 212, 0.4); }
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.88);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-        @keyframes floatPulse {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-4px) scale(1.03); }
-        }
-        .animate-float { animation: floatPulse 3s ease-in-out infinite; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 4px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Typing Defender - Arcade Portal</title>
+  
+  <!-- Phông chữ chuẩn Sci-Fi & Tiếng Việt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0b10;
+      --card-bg: rgba(18, 22, 36, 0.85);
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff007f;
+      --neon-purple: #9d00ff;
+      --text-main: #e0e6ed;
+      --border-glow: rgba(0, 243, 255, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Be Vietnam Pro', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 10px;
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(157, 0, 255, 0.15), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(0, 243, 255, 0.1), transparent 50%);
+    }
+
+    /* HEADER PORTAL */
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    h1.portal-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    }
+
+    p.portal-subtitle {
+      color: #8a99ad;
+      font-size: 0.95rem;
+      margin-top: 5px;
+    }
+
+    /* CONTAINER CHÍNH */
+    .portal-container {
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 25px;
+    }
+
+    @media (max-width: 900px) {
+      .portal-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ARCADE FRAME */
+    .game-cabinet {
+      background: var(--card-bg);
+      border: 1px solid var(--border-glow);
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 243, 255, 0.1);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cabinet-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 5px;
+    }
+
+    .status-badge {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.8rem;
+      color: var(--neon-cyan);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--neon-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--neon-cyan);
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* GAME IFRAME / CONTAINER */
+    .game-screen-wrapper {
+      width: 100%;
+      max-width: 480px;
+      height: 720px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(0, 243, 255, 0.2);
+      position: relative;
+      background: #000;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    iframe.game-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* SIDEBAR CONTROL */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .panel-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 1.1rem;
+      color: var(--neon-cyan);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+
+    /* VOCAB PRESETS */
+    .vocab-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .vocab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 0.88rem;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .vocab-btn:hover {
+      background: rgba(0, 243, 255, 0.1);
+      border-color: var(--neon-cyan);
+      transform: translateX(3px);
+    }
+
+    .vocab-tag {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 0, 127, 0.2);
+      color: var(--neon-pink);
+    }
+
+    /* LEADERBOARD */
+    .leaderboard-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 0.9rem;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    }
+
+    .leaderboard-item:last-child {
+      border-bottom: none;
+    }
+
+    .score-val {
+      font-family: 'Chakra Petch', sans-serif;
+      color: var(--neon-cyan);
+      font-weight: bold;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #627284;
+    }
+  </style>
 </head>
-<body class="h-screen w-screen relative flex justify-center items-center text-white overflow-hidden bg-slate-950 p-0 sm:p-2">
+<body>
 
-    <div id="game-container" class="relative w-full max-w-md h-full sm:h-[98vh] sm:max-h-[850px] bg-slate-950 sm:rounded-3xl border border-cyan-500/40 shadow-[0_0_50px_rgba(6,182,212,0.25)] flex flex-col overflow-hidden select-none">
+  <!-- HEADER -->
+  <header>
+    <h1 class="portal-title">Space Typing Defender</h1>
+    <p class="portal-subtitle">Cổng game luyên gõ từ vựng Arcade Cyberpunk</p>
+  </header>
 
-        <!-- Top Header HUD -->
-        <header class="absolute top-0 left-0 w-full p-3 z-20 flex flex-col gap-2 pointer-events-none bg-gradient-to-b from-slate-950/95 via-slate-950/60 to-transparent">
-            <div class="flex justify-between items-center w-full">
-                <h1 class="orbitron font-extrabold text-lg tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-500 to-purple-500">
-                    SPACE TYPER
-                </h1>
-                <div class="flex items-center gap-1.5 pointer-events-auto">
-                    <button id="btn-vkey-toggle" class="glass-panel px-2.5 py-1.5 rounded-xl border border-white/20 hover:border-cyan-400 transition flex items-center gap-1 text-[11px] font-bold text-cyan-300">
-                        ⌨️ <span id="vkey-text">BÀN PHÍM</span>
-                    </button>
-                    <button id="btn-audio" class="glass-panel px-3 py-1.5 rounded-xl border border-white/20 hover:border-cyan-400 transition flex items-center gap-1.5">
-                        <span id="audio-icon" class="text-base">🔊</span>
-                        <span id="audio-text" class="text-[11px] font-bold text-cyan-300">EDM BẬT</span>
-                    </button>
-                </div>
-            </div>
+  <!-- MAIN PORTAL -->
+  <div class="portal-container">
+    
+    <!-- GAME CABINET -->
+    <div class="game-cabinet">
+      <div class="cabinet-header">
+        <div class="status-badge">
+          <div class="status-dot"></div> ARCADE ONLINE
+        </div>
+        <button onclick="reloadGame()" style="background:none; border:none; color:#8a99ad; cursor:pointer; font-size:0.85rem;">🔄 Tải lại Game</button>
+      </div>
 
-            <!-- Score & Level Stats -->
-            <div class="flex justify-between items-center gap-2 pointer-events-auto">
-                <div class="glass-panel px-3 py-1.5 rounded-xl flex items-center gap-2 border border-cyan-500/30 flex-1 justify-center shadow-md">
-                    <div class="text-[11px] text-cyan-400 font-bold uppercase tracking-wider">ĐIỂM:</div>
-                    <div id="hud-score" class="orbitron text-xl font-extrabold text-cyan-300 neon-text-cyan">0</div>
-                </div>
+      <div class="game-screen-wrapper">
+        <!-- Tích hợp game trực tiếp qua srcdoc -->
+        <iframe id="gameFrame" class="game-iframe" srcdoc='
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Typing Defender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: "Be Vietnam Pro", sans-serif; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background-color: #050508; color: #fff; }
+    #game-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle at center, #0d101d 0%, #050508 100%); }
+    canvas { display: block; width: 100%; height: 100%; }
+    .ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; padding: 15px; }
+    .interactive { pointer-events: auto; }
+    .hud-top { display: flex; justify-content: space-between; align-items: center; width: 100%; font-family: "Chakra Petch", sans-serif; }
+    .hud-card { background: rgba(15, 20, 35, 0.75); border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 8px; padding: 6px 12px; backdrop-filter: blur(5px); box-shadow: 0 0 10px rgba(0, 243, 255, 0.15); }
+    .score-label { font-size: 0.75rem; color: #8a99ad; text-transform: uppercase; }
+    .score-val { font-size: 1.2rem; font-weight: 700; color: #00f3ff; text-shadow: 0 0 8px rgba(0,243,255,0.6); }
+    .life-val { font-size: 1.2rem; font-weight: 700; color: #ff007f; text-shadow: 0 0 8px rgba(255,0,127,0.6); }
+    #menu-overlay { position: absolute; inset: 0; background: rgba(5, 5, 8, 0.88); backdrop-filter: blur(10px); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; z-index: 10; }
+    .panel { background: rgba(15, 22, 40, 0.9); border: 1px solid rgba(0, 243, 255, 0.4); border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; box-shadow: 0 0 25px rgba(0, 243, 255, 0.2); display: flex; flex-direction: column; gap: 12px; }
+    .panel-title { font-family: "Chakra Petch", sans-serif; text-align: center; font-size: 1.4rem; color: #00f3ff; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+    .input-group { display: flex; flex-direction: column; gap: 4px; }
+    .input-label { font-size: 0.75rem; color: #00f3ff; font-family: "Chakra Petch", sans-serif; text-transform: uppercase; letter-spacing: 0.5px; }
+    input[type="text"], textarea, input[type="number"] { background: rgba(5, 10, 20, 0.8); border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 6px; color: #fff; padding: 8px; font-size: 0.85rem; outline: none; transition: 0.2s; }
+    input[type="text"]:focus, textarea:focus, input[type="number"]:focus { border-color: #00f3ff; box-shadow: 0 0 8px rgba(0,243,255,0.4); }
+    textarea { resize: none; height: 70px; font-family: monospace; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn { background: linear-gradient(135deg, #00f3ff, #ff007f); border: none; border-radius: 8px; color: #fff; padding: 10px; font-family: "Chakra Petch", sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); transition: 0.2s; text-align: center; }
+    .btn:active { transform: scale(0.98); }
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); }
+    .toggle-label { font-size: 0.8rem; color: #d0d8e0; display: flex; align-items: center; gap: 6px; }
+    .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; inset: 0; background-color: #2a3545; transition: .3s; border-radius: 20px; }
+    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+    input:checked + .slider { background-color: #00f3ff; }
+    input:checked + .slider:before { transform: translateX(16px); }
+    #virtual-keyboard { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 98%; max-width: 440px; background: rgba(10, 15, 28, 0.85); border: 1px solid rgba(0, 243, 255, 0.2); border-radius: 10px; padding: 6px; backdrop-filter: blur(8px); display: flex; flex-direction: column; gap: 4px; z-index: 5; }
+    .kb-row { display: flex; justify-content: center; gap: 3px; width: 100%; }
+    .key { flex: 1; height: 36px; max-width: 38px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 4px; color: #fff; font-family: "Chakra Petch", sans-serif; font-size: 0.9rem; font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.1s; }
+    .key:active, .key.active { background: #00f3ff; color: #000; box-shadow: 0 0 10px #00f3ff; }
+    .volume-slider { -webkit-appearance: none; width: 80px; height: 4px; border-radius: 2px; background: #2a3545; outline: none; }
+    .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #00f3ff; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="gameCanvas"></canvas>
+    <div class="ui-layer">
+      <div class="hud-top">
+        <div class="hud-card"><div class="score-label">ĐIỂM</div><div id="score" class="score-val">0</div></div>
+        <div class="hud-card" style="text-align: right;"><div class="score-label">MẠNG</div><div id="lives" class="life-val">❤️❤️❤️</div></div>
+      </div>
+      <div id="virtual-keyboard" class="interactive">
+        <div class="kb-row" id="row1"></div>
+        <div class="kb-row" id="row2"></div>
+        <div class="kb-row" id="row3"></div>
+      </div>
+    </div>
+    <div id="menu-overlay" class="interactive">
+      <div class="panel">
+        <div class="panel-title">SPACE TYPER DEFENDER</div>
+        <div class="row-2">
+          <div class="input-group">
+            <label class="input-label">Tốc độ rơi</label>
+            <input type="number" id="speedInput" value="0.05" step="0.01" min="0.0001">
+          </div>
+          <div class="input-group">
+            <label class="input-label">Thời gian (s)</label>
+            <input type="number" id="spawnInput" value="3.5" step="0.5" min="1">
+          </div>
+        </div>
+        <div class="input-group">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label class="input-label">Danh sách từ vựng</label>
+            <button id="aiGenBtn" style="background:none; border:none; color:#00f3ff; font-size:0.75rem; cursor:pointer;">✨ AI Tạo</button>
+          </div>
+          <textarea id="vocabInput" placeholder="Định dạng: Từ : Nghĩa&#10;GALAXY : Thiên hà"></textarea>
+        </div>
+        <button id="startBtn" class="btn">BẮT ĐẦU NHIỆM VỤ (ENTER)</button>
+        <div class="toggle-row">
+          <span class="toggle-label">🌐 Hiển thị phiên dịch</span>
+          <label class="switch"><input type="checkbox" id="transToggle" checked><span class="slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">🎵 Âm lượng nhạc <span id="volText">50%</span></span>
+          <input type="range" id="bgmVol" class="volume-slider" min="0" max="1" step="0.05" value="0.5">
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">🎯 Lối chơi đứng im (Tĩnh)</span>
+          <label class="switch"><input type="checkbox" id="idleToggle" checked><span class="slider"></span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const defaultVocab = [
+      { word: "GALAXY", trans: "Thiên hà" }, { word: "PLANET", trans: "Hành tinh" },
+      { word: "NEBULA", trans: "Tinh vân" }, { word: "ASTEROID", trans: "Tiểu hành tinh" },
+      { word: "ORBIT", trans: "Quỹ đạo" }, { word: "COSMOS", trans: "Vũ trụ" },
+      { word: "GRAVITY", trans: "Trọng lực" }, { word: "ROCKET", trans: "Tên lửa" }
+    ];
+    let vocabList = [...defaultVocab];
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    let width, height;
+    function resize() { width = canvas.width = canvas.parentElement.clientWidth; height = canvas.height = canvas.parentElement.clientHeight; }
+    window.addEventListener("resize", resize); resize();
 
-                <div class="glass-panel px-3 py-1.5 rounded-xl flex items-center gap-2 border border-purple-500/30 flex-1 justify-center shadow-md">
-                    <div class="text-[11px] text-purple-400 font-bold uppercase tracking-wider">CẤP:</div>
-                    <div id="hud-level" class="orbitron text-xl font-extrabold text-purple-300">1</div>
-                </div>
-            </div>
-            
-            <div id="hud-status" class="text-[11px] text-cyan-300/90 font-medium tracking-widest text-center">HỆ THỐNG PHÒNG THỦ</div>
-        </header>
+    let gameState = "MENU", score = 0, lives = 3;
+    let activeWords = [], particles = [], lasers = [];
+    let currentInput = "", targetWord = null;
+    let baseSpeed = 0.05, spawnInterval = 3500, lastSpawn = 0;
+    let showTranslation = true, isIdleMode = true;
 
-        <!-- Main Game Canvas Area -->
-        <main class="relative w-full h-full flex-1 overflow-hidden">
-            <canvas id="gameCanvas" class="w-full h-full block cursor-pointer"></canvas>
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let bgmGain = audioCtx.createGain(); bgmGain.connect(audioCtx.destination); bgmGain.gain.value = 0.5;
+    let isBgmPlaying = false, bgmTimer = null;
 
-            <input type="text" id="hidden-mobile-input" class="absolute opacity-0 pointer-events-none -top-20 left-0" autocomplete="off" autocapitalize="characters">
+    function playSynthBgm() {
+      if (isBgmPlaying) return; isBgmPlaying = true;
+      const notes = [110, 130.81, 146.83, 164.81, 196.00]; let step = 0;
+      bgmTimer = setInterval(() => {
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        const osc = audioCtx.createOscillator(); const g = audioCtx.createGain();
+        osc.type = "sawtooth"; osc.frequency.setValueAtTime(notes[step % notes.length] / 2, audioCtx.currentTime);
+        g.gain.setValueAtTime(0.05, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+        osc.connect(g); g.connect(bgmGain); osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+        step++;
+      }, 200);
+    }
+    function stopSynthBgm() { isBgmPlaying = false; clearInterval(bgmTimer); }
 
-            <div id="astro-box" class="absolute bottom-4 left-4 z-20 pointer-events-auto transition-all duration-300">
-                <div class="glass-panel p-2.5 rounded-2xl flex items-center justify-center border-2 border-cyan-400/50 shadow-[0_0_20px_rgba(6,182,212,0.3)] bg-slate-900/90 backdrop-blur-md">
-                    <div id="astro-avatar" class="text-3xl sm:text-4xl animate-float">👨‍🚀</div>
-                </div>
-            </div>
+    function playLaserSound() {
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      const osc = audioCtx.createOscillator(); const g = audioCtx.createGain();
+      osc.type = "sawtooth"; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.15);
+      g.gain.setValueAtTime(0.2, audioCtx.currentTime); g.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+      osc.connect(g); g.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.15);
+    }
 
-            <div id="virtual-keyboard" class="hidden absolute bottom-2 left-2 right-2 z-20 glass-panel p-2 rounded-2xl border border-cyan-500/40 bg-slate-950/90 backdrop-blur-md flex flex-col gap-1 shadow-2xl">
-                <div class="flex justify-center gap-1" id="vkey-row-1"></div>
-                <div class="flex justify-center gap-1" id="vkey-row-2"></div>
-                <div class="flex justify-center gap-1" id="vkey-row-3"></div>
-            </div>
+    function speakWord(text) {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text); u.lang = "en-US"; u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+      }
+    }
 
-            <!-- Modal Start / Game Over -->
-            <div id="game-modal" class="absolute inset-0 bg-slate-950/92 backdrop-blur-md flex flex-col justify-center items-center z-30 transition-all duration-300 overflow-y-auto p-4">
-                <div class="glass-panel w-full max-w-sm p-5 sm:p-6 rounded-2xl border border-cyan-500/40 text-center shadow-[0_0_40px_rgba(6,182,212,0.2)] relative">
-                    
-                    <h2 id="modal-title" class="orbitron text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500 mb-3">
-                        SPACE TYPER DEFENDER
-                    </h2>
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x; this.y = y; this.color = color;
+        this.vx = (Math.random() - 0.5) * 6; this.vy = (Math.random() - 0.5) * 6;
+        this.alpha = 1; this.size = Math.random() * 3 + 1;
+      }
+      update() { this.x += this.vx; this.y += this.vy; this.alpha -= 0.02; }
+      draw() {
+        ctx.save(); ctx.globalAlpha = Math.max(0, this.alpha); ctx.fillStyle = this.color;
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+      }
+    }
 
-                    <div id="modal-stats" class="hidden mb-3 p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/50 flex justify-around">
-                        <div>
-                            <div class="text-[11px] text-slate-400 font-semibold">TỔNG ĐIỂM</div>
-                            <div id="stat-score" class="orbitron text-xl text-cyan-400 font-bold">0</div>
-                        </div>
-                    </div>
+    function resolveMeteorOverlaps() {
+      const minDistance = 80;
+      for (let i = 0; i < activeWords.length; i++) {
+        for (let j = i + 1; j < activeWords.length; j++) {
+          let w1 = activeWords[i], w2 = activeWords[j];
+          let dx = w2.x - w1.x, dy = w2.y - w1.y;
+          let dist = Math.hypot(dx, dy);
+          if (dist < minDistance && dist > 0) {
+            let overlap = (minDistance - dist) / 2;
+            let nx = dx / dist, ny = dy / dist;
+            w1.x -= nx * overlap; w1.y -= ny * overlap;
+            w2.x += nx * overlap; w2.y += ny * overlap;
+            w1.x = Math.max(50, Math.min(width - 50, w1.x));
+            w2.x = Math.max(50, Math.min(width - 50, w2.x));
+          }
+        }
+      }
+    }
 
-                    <div class="flex flex-col gap-2.5 mb-3 text-left">
-                        <div class="grid grid-cols-2 gap-2">
-                            <div class="bg-slate-900/80 p-2 rounded-xl border border-cyan-500/30">
-                                <label class="block text-[10px] font-bold text-cyan-400 mb-0.5 uppercase tracking-wider">Tốc độ rơi</label>
-                                <input type="number" id="fall-speed-input" value="0.05" step="0.01" min="0.0001" max="5.0" class="w-full bg-slate-950 text-cyan-300 text-sm font-bold p-1 rounded-lg border border-cyan-500/50 text-center orbitron outline-none">
-                            </div>
-                            <div class="bg-slate-900/80 p-2 rounded-xl border border-cyan-500/30">
-                                <label class="block text-[10px] font-bold text-cyan-400 mb-0.5 uppercase tracking-wider">Thời gian (s)</label>
-                                <input type="number" id="spawn-interval-input" value="3.5" step="0.5" min="0.5" max="30" class="w-full bg-slate-950 text-cyan-300 text-sm font-bold p-1 rounded-lg border border-cyan-500/50 text-center orbitron outline-none">
-                            </div>
-                        </div>
+    function spawnWord() {
+      if (vocabList.length === 0 || activeWords.length >= 4) return;
+      const item = vocabList[Math.floor(Math.random() * vocabList.length)];
+      let bestX = width / 2, bestY = -20, maxMinDist = -1;
+      for (let attempt = 0; attempt < 10; attempt++) {
+        let testX = Math.random() * (width - 120) + 60;
+        let testY = isIdleMode ? (Math.random() * (height * 0.4) + 80) : -20;
+        let minDist = 9999;
+        for (let w of activeWords) {
+          let d = Math.hypot(w.x - testX, w.y - testY);
+          if (d < minDist) minDist = d;
+        }
+        if (activeWords.length === 0 || minDist > maxMinDist) {
+          maxMinDist = minDist; bestX = testX; bestY = testY;
+        }
+      }
+      activeWords.push({
+        text: item.word.toUpperCase(), trans: item.trans,
+        x: bestX, y: bestY,
+        speed: isIdleMode ? 0 : baseSpeed * (1 + Math.random() * 0.1),
+        radius: 25, alpha: 0
+      });
+    }
 
-                        <div class="bg-slate-900/80 p-2.5 rounded-xl border border-pink-500/30 relative">
-                            <div class="flex justify-between items-center mb-1">
-                                <label class="block text-[10px] font-bold text-pink-400 uppercase tracking-wider">Từ Vựng Nhiệm Vụ</label>
-                                <div class="flex gap-1">
-                                    <button id="btn-auto" type="button" class="px-1.5 py-0.5 rounded bg-pink-500/20 hover:bg-pink-500/40 text-pink-300 text-[10px] font-bold border border-pink-500/50 transition">ĐỔI CHỦ ĐỀ</button>
-                                    <button id="btn-ai-vocab" type="button" class="px-1.5 py-0.5 rounded bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-300 text-[10px] font-bold border border-cyan-500/50 transition">✨ AI TẠO</button>
-                                </div>
-                            </div>
-                            <textarea id="custom-vocab" rows="3" placeholder="Định dạng: Từ : Nghĩa&#10;GALAXY : Thiên hà" class="w-full bg-slate-950 text-pink-50 text-xs p-2 rounded-lg border border-pink-500/50 outline-none resize-none font-sans font-medium"></textarea>
-                        </div>
-                    </div>
+    function destroyWord(index) {
+      const w = activeWords[index];
+      speakWord(w.text);
+      for (let i = 0; i < 20; i++) particles.push(new Particle(w.x, w.y, "#00f3ff"));
+      activeWords.splice(index, 1);
+      score += 10; document.getElementById("score").innerText = score;
+      if (targetWord === w) { targetWord = null; currentInput = ""; }
+      spawnWord();
+    }
 
-                    <button id="btn-start" class="w-full py-3 rounded-xl orbitron font-bold text-sm text-slate-950 bg-gradient-to-r from-cyan-400 via-teal-300 to-pink-400 hover:brightness-110 active:scale-95 transition shadow-lg shadow-cyan-500/30">
-                        BẮT ĐẦU NHIỆM VỤ (ENTER)
-                    </button>
+    function startGame() {
+      parseVocabInput();
+      baseSpeed = parseFloat(document.getElementById("speedInput").value) || 0.05;
+      spawnInterval = (parseFloat(document.getElementById("spawnInput").value) || 3.5) * 1000;
+      showTranslation = document.getElementById("transToggle").checked;
+      isIdleMode = document.getElementById("idleToggle").checked;
+      score = 0; lives = 3; activeWords = []; particles = []; lasers = [];
+      targetWord = null; currentInput = "";
+      document.getElementById("score").innerText = score;
+      document.getElementById("lives").innerText = "❤️❤️❤️";
+      document.getElementById("menu-overlay").style.display = "none";
+      gameState = "PLAYING"; playSynthBgm();
+      spawnWord(); spawnWord();
+    }
 
-                    <div class="mt-2.5 bg-slate-900/80 p-2 rounded-xl border border-cyan-500/30 flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-1.5 text-[10px] font-bold text-cyan-300 uppercase tracking-wider">
-                            <span>🌐</span>
-                            <span>Hiển thị phiên dịch</span>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="translation-toggle" class="sr-only peer" checked>
-                            <div class="w-8 h-4 bg-slate-950 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-cyan-400 after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-cyan-900 border border-cyan-500/50"></div>
-                        </label>
-                    </div>
+    function gameOver() {
+      gameState = "GAMEOVER"; stopSynthBgm();
+      alert("NHIỆM VỤ THẤT BẠI! Điểm của bạn: " + score);
+      document.getElementById("menu-overlay").style.display = "flex";
+    }
 
-                    <div class="mt-1.5 bg-slate-900/80 p-2 rounded-xl border border-purple-500/30 flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-1.5 text-[10px] font-bold text-purple-300 uppercase tracking-wider">
-                            <span>🎵</span>
-                            <span>Nhạc BGM</span>
-                            <span id="bgm-vol-text" class="orbitron text-purple-400">50%</span>
-                        </div>
-                        <input type="range" id="bgm-volume-slider" min="0" max="100" value="50" class="w-2/5 accent-purple-400 cursor-pointer h-1.5 bg-slate-950 rounded-lg outline-none">
-                    </div>
+    function parseVocabInput() {
+      const val = document.getElementById("vocabInput").value.trim();
+      if (!val) { vocabList = [...defaultVocab]; return; }
+      const lines = val.split("\n"); const parsed = [];
+      lines.forEach(l => {
+        const parts = l.split(":");
+        if (parts.length >= 2) parsed.push({ word: parts[0].trim(), trans: parts[1].trim() });
+      });
+      if (parsed.length > 0) vocabList = parsed;
+    }
 
-                    <div class="mt-1.5 bg-slate-900/80 p-2 rounded-xl border border-pink-500/30 flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-1.5 text-[10px] font-bold text-pink-300 uppercase tracking-wider">
-                            <span>🎯</span>
-                            <span>Chế độ Đứng Im</span>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="stealth-mode-toggle" class="sr-only peer">
-                            <div class="w-8 h-4 bg-slate-950 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-pink-400 after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-pink-900 border border-pink-500/50"></div>
-                        </label>
-                    </div>
-                </div>
-            </div>
+    function handleInputChar(char) {
+      if (gameState !== "PLAYING") return;
+      if (!targetWord) {
+        const match = activeWords.find(w => w.alpha >= 1 && w.text.startsWith(char));
+        if (match) { targetWord = match; currentInput = char; playLaserSound(); lasers.push({ sx: width / 2, sy: height - 40, tx: match.x, ty: match.y, alpha: 1 }); }
+      } else {
+        const nextChar = targetWord.text[currentInput.length];
+        if (char === nextChar) {
+          currentInput += char; playLaserSound(); lasers.push({ sx: width / 2, sy: height - 40, tx: targetWord.x, ty: targetWord.y, alpha: 1 });
+          if (currentInput === targetWord.text) { const idx = activeWords.indexOf(targetWord); if (idx !== -1) destroyWord(idx); }
+        }
+      }
+    }
 
-            <!-- AI Modal -->
-            <div id="ai-modal" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col justify-center items-center z-40 p-4">
-                <div class="glass-panel max-w-xs w-full p-4 rounded-2xl border border-cyan-500/40 shadow-xl text-center">
-                    <h3 class="orbitron text-base font-black text-cyan-300 mb-2">TẠO TỪ VỰNG GEMINI AI</h3>
-                    <p class="text-[11px] text-slate-200 mb-2 font-medium">Nhập chủ đề bạn muốn học:</p>
-                    <input type="text" id="ai-theme-input" placeholder="Cyberpunk, Động vật, Ẩm thực..." class="w-full bg-slate-950 text-cyan-200 p-2 rounded-lg border border-cyan-500/50 mb-3 text-xs font-medium outline-none">
-                    <div class="flex gap-2">
-                        <button id="btn-ai-cancel" class="flex-1 py-1.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold">HỦY</button>
-                        <button id="btn-ai-generate" class="flex-1 py-1.5 rounded-xl bg-cyan-500 text-slate-950 text-xs font-bold">TẠO NGAY</button>
-                    </div>
-                </div>
-            </div>
-        </main>
+    window.addEventListener("keydown", (e) => {
+      if (gameState === "MENU" && e.key === "Enter") { startGame(); return; }
+      if (gameState === "PLAYING") {
+        const key = e.key.toUpperCase();
+        if (key.length === 1 && key >= "A" && key <= "Z") handleInputChar(key);
+      }
+    });
+
+    const rows = [["Q","W","E","R","T","Y","U","I","O","P"], ["A","S","D","F","G","H","J","K","L"], ["Z","X","C","V","B","N","M"]];
+    rows.forEach((r, idx) => {
+      const container = document.getElementById("row" + (idx + 1));
+      r.forEach(k => {
+        const keyEl = document.createElement("div"); keyEl.className = "key"; keyEl.innerText = k;
+        keyEl.addEventListener("touchstart", (e) => { e.preventDefault(); handleInputChar(k); keyEl.classList.add("active"); setTimeout(() => keyEl.classList.remove("active"), 100); });
+        keyEl.addEventListener("mousedown", () => { handleInputChar(k); keyEl.classList.add("active"); setTimeout(() => keyEl.classList.remove("active"), 100); });
+        container.appendChild(keyEl);
+      });
+    });
+
+    document.getElementById("startBtn").addEventListener("click", startGame);
+    document.getElementById("bgmVol").addEventListener("input", (e) => { bgmGain.gain.value = parseFloat(e.target.value); document.getElementById("volText").innerText = Math.round(e.target.value * 100) + "%"; });
+    document.getElementById("aiGenBtn").addEventListener("click", () => {
+      const themes = [
+        "SPACE : Vũ trụ\nSTAR : Ngôi sao\nGALAXY : Thiên hà\nCOMET : Sao chổi",
+        "APPLE : Quả táo\nBANANA : Quả chuối\nORANGE : Quả cam\nGRAPE : Nho",
+        "COMPUTER : Máy tính\nNETWORK : Mạng lưới\nDATA : Dữ liệu\nCODE : Mã nguồn"
+      ];
+      document.getElementById("vocabInput").value = themes[Math.floor(Math.random() * themes.length)];
+    });
+
+    function update() {
+      if (gameState !== "PLAYING") return;
+      const now = Date.now();
+      if (now - lastSpawn > spawnInterval) { spawnWord(); lastSpawn = now; }
+
+      resolveMeteorOverlaps();
+
+      for (let i = activeWords.length - 1; i >= 0; i--) {
+        const w = activeWords[i];
+        if (w.alpha < 1) w.alpha = Math.min(1, w.alpha + 0.0012);
+        w.y += w.speed;
+        if (w.y > height - 60) {
+          activeWords.splice(i, 1); lives--;
+          document.getElementById("lives").innerText = "❤️".repeat(Math.max(0, lives));
+          if (targetWord === w) { targetWord = null; currentInput = ""; }
+          if (lives <= 0) gameOver();
+        }
+      }
+      for (let i = particles.length - 1; i >= 0; i--) { particles[i].update(); if (particles[i].alpha <= 0) particles.splice(i, 1); }
+      for (let i = lasers.length - 1; i >= 0; i--) { lasers[i].alpha -= 0.1; if (lasers[i].alpha <= 0) lasers.splice(i, 1); }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.save(); ctx.strokeStyle = "rgba(0, 243, 255, 0.4)"; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(width / 2 - 20, height - 20); ctx.lineTo(width / 2, height - 40); ctx.lineTo(width / 2 + 20, height - 20); ctx.stroke(); ctx.restore();
+
+      lasers.forEach(l => {
+        ctx.save(); ctx.strokeStyle = `rgba(0, 243, 255, ${l.alpha})`; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.moveTo(l.sx, l.sy); ctx.lineTo(l.tx, l.ty); ctx.stroke(); ctx.restore();
+      });
+
+      activeWords.forEach(w => {
+        ctx.save(); ctx.globalAlpha = w.alpha;
+        ctx.fillStyle = "rgba(20, 30, 50, 0.7)"; ctx.strokeStyle = (targetWord === w) ? "#ff007f" : "#00f3ff"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(w.x, w.y, w.radius, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.font = "700 16px \"Chakra Petch\", sans-serif"; ctx.textAlign = "center";
+        const isTarget = (targetWord === w);
+        if (isTarget) {
+          const typed = currentInput; const untyped = w.text.substring(typed.length);
+          const tw = ctx.measureText(w.text).width; let startX = w.x - tw / 2;
+          ctx.fillStyle = "#ff007f"; ctx.textAlign = "left"; ctx.fillText(typed, startX, w.y - 35);
+          ctx.fillStyle = "#ffffff"; ctx.fillText(untyped, startX + ctx.measureText(typed).width, w.y - 35);
+        } else {
+          ctx.fillStyle = "#ffffff"; ctx.fillText(w.text, w.x, w.y - 35);
+        }
+        if (showTranslation && w.trans) {
+          ctx.font = "12px \"Be Vietnam Pro\", sans-serif"; ctx.fillStyle = "#8a99ad"; ctx.fillText(w.trans, w.x, w.y + 40);
+        }
+        ctx.restore();
+      });
+
+      particles.forEach(p => p.draw());
+    }
+
+    function loop() { update(); draw(); requestAnimationFrame(loop); }
+    loop();
+  </script>
+</body>
+</html>
+        '></iframe>
+      </div>
     </div>
 
-    <script>
-        const DEFAULT_VOCABULARY = [
-            { en: "SPACE", vi: "Không gian" },
-            { en: "GALAXY", vi: "Thiên hà" },
-            { en: "STATION", vi: "Trạm vũ trụ" },
-            { en: "PLANET", vi: "Hành tinh" },
-            { en: "ROCKET", vi: "Tên lửa" },
-            { en: "ENERGY", vi: "Năng lượng" },
-            { en: "SHIELD", vi: "Lá chắn" },
-            { en: "ORBIT", vi: "Quỹ đạo" },
-            { en: "METEOR", vi: "Thiên thạch" },
-            { en: "GRAVITY", vi: "Trọng lực" }
-        ];
-
-        let activeVocabulary = [...DEFAULT_VOCABULARY];
-        let globalBaseSpeed = 0.05; 
-        let globalSpawnInterval = 3500; 
-        let isVirtualKeyboardOpen = false;
-        let showTranslation = true;
-        let isStealthMode = false;
-
-        const AI_WORD_POOL = [
-            [
-                { en: "NEBULA", vi: "Tinh vân" },
-                { en: "QUASAR", vi: "Chu sa tinh" },
-                { en: "PULSAR", vi: "Sao xung" },
-                { en: "ECLIPSE", vi: "Nhật / Nguyệt thực" },
-                { en: "ASTEROID", vi: "Tiểu hành tinh" },
-                { en: "COMET", vi: "Sao chổi" },
-                { en: "SUPERNOVA", vi: "Siêu tân tinh" },
-                { en: "QUARK", vi: "Hạt hạ nguyên tử" },
-                { en: "VOID", vi: "Hư không" },
-                { en: "EVENT", vi: "Sự kiện chân trời" }
-            ],
-            [
-                { en: "CIRCUIT", vi: "Mạch điện" },
-                { en: "CYBER", vi: "Không gian mạng" },
-                { en: "MATRIX", vi: "Ma trận" },
-                { en: "SYNAPSE", vi: "Khớp thần kinh" },
-                { en: "FIREWALL", vi: "Tường lửa" },
-                { en: "QUANTUM", vi: "Lượng tử" },
-                { en: "BINARY", vi: "Nhị phân" },
-                { en: "ROBOTIC", vi: "Thuộc robot" },
-                { en: "CRYPTO", vi: "Mật mã" },
-                { en: "PROCESSOR", vi: "Bộ xử lý" }
-            ]
-        ];
-
-        function buildVirtualKeyboard() {
-            const row1 = "QWERTYUIOP".split('');
-            const row2 = "ASDFGHJKL".split('');
-            const row3 = "ZXCVBNM".split('');
-
-            const createKeyBtn = (char) => {
-                const btn = document.createElement('button');
-                btn.className = 'flex-1 py-1.5 bg-slate-800/90 hover:bg-cyan-500/40 active:bg-cyan-400 text-cyan-200 hover:text-white rounded font-bold orbitron text-xs border border-cyan-500/30 transition shadow';
-                btn.innerText = char;
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleInputChar(char);
-                });
-                return btn;
-            };
-
-            const r1Container = document.getElementById('vkey-row-1');
-            const r2Container = document.getElementById('vkey-row-2');
-            const r3Container = document.getElementById('vkey-row-3');
-
-            r1Container.innerHTML = '';
-            r2Container.innerHTML = '';
-            r3Container.innerHTML = '';
-
-            row1.forEach(c => r1Container.appendChild(createKeyBtn(c)));
-            row2.forEach(c => r2Container.appendChild(createKeyBtn(c)));
-            row3.forEach(c => r3Container.appendChild(createKeyBtn(c)));
-        }
-        buildVirtualKeyboard();
-
-        document.getElementById('btn-vkey-toggle').addEventListener('click', () => {
-            isVirtualKeyboardOpen = !isVirtualKeyboardOpen;
-            const vkey = document.getElementById('virtual-keyboard');
-            const astroBox = document.getElementById('astro-box');
-
-            if (isVirtualKeyboardOpen) {
-                vkey.classList.remove('hidden');
-                astroBox.style.bottom = '110px';
-            } else {
-                vkey.classList.add('hidden');
-                astroBox.style.bottom = '16px';
-            }
-        });
-
-        document.getElementById('btn-auto').addEventListener('click', () => {
-            const randomPool = AI_WORD_POOL[Math.floor(Math.random() * AI_WORD_POOL.length)];
-            const formatted = randomPool.map(item => \`\${item.en} : \${item.vi}\`).join('\\n');
-            document.getElementById('custom-vocab').value = formatted;
-        });
-
-        document.getElementById('btn-ai-vocab').addEventListener('click', () => {
-            document.getElementById('ai-modal').classList.remove('hidden');
-        });
-
-        document.getElementById('btn-ai-cancel').addEventListener('click', () => {
-            document.getElementById('ai-modal').classList.add('hidden');
-        });
-
-        document.getElementById('btn-ai-generate').addEventListener('click', async () => {
-            const theme = document.getElementById('ai-theme-input').value.trim() || 'Vũ Trụ';
-            const btnGen = document.getElementById('btn-ai-generate');
-            btnGen.innerText = 'ĐANG TẠO...';
-            btnGen.disabled = true;
-
-            try {
-                const systemPrompt = "You are an expert vocabulary generator for an arcade typing game. Generate exactly 10 English vocabulary words related to the given theme, along with their concise Vietnamese translations. Provide ONLY a valid JSON array of objects with keys 'en' (uppercase English word, no spaces or special chars except letters) and 'vi' (Vietnamese translation).";
-                const userQuery = \`Theme: \${theme}\`;
-                const apiKey = "";
-                const apiUrl = \`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=\${apiKey}\`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] },
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "en": { "type": "STRING" },
-                                    "vi": { "type": "STRING" }
-                                },
-                                propertyOrdering: ["en", "vi"]
-                            }
-                        }
-                    }
-                };
-
-                let response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    const textContent = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (textContent) {
-                        const parsedList = JSON.parse(textContent);
-                        const formattedText = parsedList
-                            .map(item => \`\${item.en.replace(/[^A-Za-z]/g, '').toUpperCase()} : \${item.vi}\`)
-                            .filter(line => line.split(' : ')[0].length > 0)
-                            .join('\\n');
-                        
-                        if (formattedText) {
-                            document.getElementById('custom-vocab').value = formattedText;
-                        }
-                    }
-                }
-            } catch (err) {
-                console.error("Gemini AI generation error:", err);
-            } finally {
-                btnGen.innerText = 'TẠO NGAY';
-                btnGen.disabled = false;
-                document.getElementById('ai-modal').classList.add('hidden');
-            }
-        });
-
-        class SoundEngine {
-            constructor() {
-                this.ctx = null;
-                this.isMuted = false;
-                this.bgmVolume = 0.5;
-                this.bpm = 138;
-                this.currentStep = 0;
-                this.nextNoteTime = 0;
-                this.timerID = null;
-                this.isMusicPlaying = false;
-
-                this.chords = [
-                    { root: 110.00, bass: 55.00, notes: [220.00, 261.63, 329.63, 392.00] },
-                    { root: 87.31,  bass: 43.65, notes: [174.61, 220.00, 261.63, 329.63] },
-                    { root: 130.81, bass: 65.41, notes: [261.63, 329.63, 392.00, 493.88] },
-                    { root: 98.00,  bass: 49.00, notes: [196.00, 246.94, 293.66, 392.00] }
-                ];
-
-                this.leadPattern = [
-                    0, 2, 1, 3, 2, 1, 3, 2, 0, 2, 1, 3, 2, 3, 1, 0,
-                    0, 1, 2, 3, 1, 2, 3, 2, 0, 3, 2, 1, 3, 2, 1, 0,
-                    0, 2, 3, 1, 2, 0, 3, 2, 1, 3, 2, 1, 0, 2, 1, 3,
-                    0, 3, 2, 1, 3, 2, 1, 0, 2, 1, 3, 2, 1, 0, 2, 3
-                ];
-            }
-
-            init() {
-                if (!this.ctx) {
-                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                    this.ctx = new AudioCtx();
-                }
-                if (this.ctx.state === 'suspended') this.ctx.resume();
-            }
-
-            safeSet(param, value, time) {
-                if (param && Number.isFinite(value) && Number.isFinite(time)) {
-                    try { param.setValueAtTime(value, time); } catch (e) {}
-                }
-            }
-            
-            safeRamp(param, value, time) {
-                if (param && Number.isFinite(value) && Number.isFinite(time)) {
-                    try { param.exponentialRampToValueAtTime(Math.max(value, 0.0001), time); } catch (e) {}
-                }
-            }
-
-            playLaser() {
-                if (this.isMuted) return;
-                this.init();
-                const now = this.ctx.currentTime;
-                if (!Number.isFinite(now)) return;
-                
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'sawtooth';
-                
-                this.safeSet(osc.frequency, 950, now);
-                this.safeRamp(osc.frequency, 110, now + 0.09);
-                
-                this.safeSet(gain.gain, 0.18, now);
-                this.safeRamp(gain.gain, 0.01, now + 0.09);
-                
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start(now);
-                osc.stop(now + 0.1);
-            }
-
-            playError() {
-                if (this.isMuted) return;
-                this.init();
-                const now = this.ctx.currentTime;
-                if (!Number.isFinite(now)) return;
-
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'sawtooth';
-                
-                this.safeSet(osc.frequency, 180, now);
-                this.safeSet(osc.frequency, 80, now + 0.06);
-                
-                this.safeSet(gain.gain, 0.22, now);
-                this.safeRamp(gain.gain, 0.01, now + 0.18);
-                
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start(now);
-                osc.stop(now + 0.2);
-            }
-
-            playExplosion() {
-                if (this.isMuted) return;
-                this.init();
-                const now = this.ctx.currentTime;
-                if (!Number.isFinite(now)) return;
-
-                const subOsc = this.ctx.createOscillator();
-                const subGain = this.ctx.createGain();
-                subOsc.type = 'triangle';
-                this.safeSet(subOsc.frequency, 220, now);
-                this.safeRamp(subOsc.frequency, 25, now + 0.3);
-                this.safeSet(subGain.gain, 0.7, now);
-                this.safeRamp(subGain.gain, 0.001, now + 0.3);
-                subOsc.connect(subGain);
-                subGain.connect(this.ctx.destination);
-                subOsc.start(now);
-                subOsc.stop(now + 0.31);
-
-                const bufferSize = Math.floor(this.ctx.sampleRate * 0.25);
-                const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-                const output = buffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) {
-                    output[i] = Math.random() * 2 - 1;
-                }
-                const noise = this.ctx.createBufferSource();
-                noise.buffer = buffer;
-                const filter = this.ctx.createBiquadFilter();
-                filter.type = 'lowpass';
-                this.safeSet(filter.frequency, 1200, now);
-                this.safeRamp(filter.frequency, 100, now + 0.25);
-                const noiseGain = this.ctx.createGain();
-                this.safeSet(noiseGain.gain, 0.5, now);
-                this.safeRamp(noiseGain.gain, 0.01, now + 0.25);
-                noise.connect(filter);
-                filter.connect(noiseGain);
-                noiseGain.connect(this.ctx.destination);
-                noise.start(now);
-            }
-
-            speak(text) {
-                if (this.isMuted) return;
-                if ('speechSynthesis' in window) {
-                    try {
-                        window.speechSynthesis.cancel();
-                        const utterance = new SpeechSynthesisUtterance(text);
-                        utterance.lang = 'en-US';
-                        utterance.rate = 0.85;
-                        utterance.pitch = 1.0;
-                        window.speechSynthesis.speak(utterance);
-                    } catch (e) {
-                        console.error('Speech synthesis error:', e);
-                    }
-                }
-            }
-
-            playKick(time) {
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'sine';
-                this.safeSet(osc.frequency, 160, time);
-                this.safeRamp(osc.frequency, 35, time + 0.1);
-                const vol = 0.55 * this.bgmVolume;
-                this.safeSet(gain.gain, vol, time);
-                this.safeRamp(gain.gain, 0.001, time + 0.12);
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start(time);
-                osc.stop(time + 0.13);
-            }
-
-            playSnare(time) {
-                const osc = this.ctx.createOscillator();
-                const oscGain = this.ctx.createGain();
-                osc.type = 'triangle';
-                this.safeSet(osc.frequency, 220, time);
-                this.safeRamp(osc.frequency, 80, time + 0.1);
-                const oscVol = 0.25 * this.bgmVolume;
-                this.safeSet(oscGain.gain, oscVol, time);
-                this.safeRamp(oscGain.gain, 0.001, time + 0.1);
-                osc.connect(oscGain);
-                oscGain.connect(this.ctx.destination);
-                osc.start(time);
-                osc.stop(time + 0.11);
-
-                const bufferSize = Math.floor(this.ctx.sampleRate * 0.12);
-                const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-                const output = buffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
-                const noise = this.ctx.createBufferSource();
-                noise.buffer = buffer;
-                const filter = this.ctx.createBiquadFilter();
-                filter.type = 'highpass';
-                filter.frequency.value = 1500;
-                const noiseGain = this.ctx.createGain();
-                const noiseVol = 0.22 * this.bgmVolume;
-                this.safeSet(noiseGain.gain, noiseVol, time);
-                this.safeRamp(noiseGain.gain, 0.001, time + 0.12);
-                noise.connect(filter);
-                filter.connect(noiseGain);
-                noiseGain.connect(this.ctx.destination);
-                noise.start(time);
-            }
-
-            playHiHat(time, isOpen = false) {
-                const duration = isOpen ? 0.12 : 0.04;
-                const bufferSize = Math.floor(this.ctx.sampleRate * duration);
-                const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-                const output = buffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
-                const noise = this.ctx.createBufferSource();
-                noise.buffer = buffer;
-                const filter = this.ctx.createBiquadFilter();
-                filter.type = 'highpass';
-                filter.frequency.value = 7500;
-                const gain = this.ctx.createGain();
-                const vol = (isOpen ? 0.15 : 0.09) * this.bgmVolume;
-                this.safeSet(gain.gain, vol, time);
-                this.safeRamp(gain.gain, 0.001, time + duration);
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(this.ctx.destination);
-                noise.start(time);
-            }
-
-            playBass(time, freq) {
-                const osc = this.ctx.createOscillator();
-                const filter = this.ctx.createBiquadFilter();
-                const gain = this.ctx.createGain();
-
-                osc.type = 'sawtooth';
-                this.safeSet(osc.frequency, freq, time);
-
-                filter.type = 'lowpass';
-                this.safeSet(filter.frequency, 800, time);
-                this.safeRamp(filter.frequency, 150, time + 0.12);
-                filter.Q.value = 4;
-
-                const vol = 0.28 * this.bgmVolume;
-                this.safeSet(gain.gain, vol, time);
-                this.safeRamp(gain.gain, 0.01, time + 0.12);
-
-                osc.connect(filter);
-                filter.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start(time);
-                osc.stop(time + 0.13);
-            }
-
-            playLead(time, freq) {
-                const osc1 = this.ctx.createOscillator();
-                const osc2 = this.ctx.createOscillator();
-                const filter = this.ctx.createBiquadFilter();
-                const gain = this.ctx.createGain();
-
-                osc1.type = 'sawtooth';
-                osc2.type = 'square';
-
-                this.safeSet(osc1.frequency, freq, time);
-                this.safeSet(osc2.frequency, freq * 1.004, time);
-
-                filter.type = 'lowpass';
-                this.safeSet(filter.frequency, 2400, time);
-                this.safeRamp(filter.frequency, 600, time + 0.15);
-                filter.Q.value = 3;
-
-                const vol = 0.14 * this.bgmVolume;
-                this.safeSet(gain.gain, vol, time);
-                this.safeRamp(gain.gain, 0.005, time + 0.15);
-
-                osc1.connect(filter);
-                osc2.connect(filter);
-                filter.connect(gain);
-                gain.connect(this.ctx.destination);
-
-                osc1.start(time);
-                osc2.start(time);
-                osc1.stop(time + 0.16);
-                osc2.stop(time + 0.16);
-            }
-
-            scheduleStep(step, time) {
-                const barIndex = Math.floor(step / 16) % this.chords.length;
-                const chord = this.chords[barIndex];
-                const stepInBar = step % 16;
-
-                if (stepInBar % 4 === 0) this.playKick(time);
-                if (stepInBar === 4 || stepInBar === 12) this.playSnare(time);
-                if (stepInBar % 2 === 1) this.playHiHat(time, stepInBar % 4 === 2);
-
-                const bassFreq = (stepInBar % 4 === 3) ? chord.bass * 2 : chord.bass;
-                this.playBass(time, bassFreq);
-
-                const noteIndex = this.leadPattern[step % this.leadPattern.length];
-                const leadFreq = chord.notes[noteIndex] * 2;
-                this.playLead(time, leadFreq);
-            }
-
-            scheduler() {
-                while (this.nextNoteTime < this.ctx.currentTime + 0.1) {
-                    this.scheduleStep(this.currentStep, this.nextNoteTime);
-                    const secondsPerBeat = 60.0 / this.bpm;
-                    this.nextNoteTime += 0.25 * secondsPerBeat;
-                    this.currentStep = (this.currentStep + 1) % 64;
-                }
-            }
-
-            startBGM() {
-                this.init();
-                if (this.isMusicPlaying) return;
-                this.isMusicPlaying = true;
-                this.currentStep = 0;
-                this.nextNoteTime = this.ctx.currentTime + 0.05;
-
-                const timerLoop = () => {
-                    if (!this.isMusicPlaying || this.isMuted || this.bgmVolume <= 0) return;
-                    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
-                    this.scheduler();
-                };
-
-                this.timerID = setInterval(timerLoop, 25);
-            }
-
-            stopBGM() {
-                this.isMusicPlaying = false;
-                if (this.timerID) {
-                    clearInterval(this.timerID);
-                    this.timerID = null;
-                }
-            }
-        }
-
-        const sound = new SoundEngine();
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            const container = document.getElementById('game-container');
-            if (container) {
-                canvas.width = container.clientWidth;
-                canvas.height = container.clientHeight;
-            } else {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        let gameState = {
-            running: false,
-            isPaused: false,
-            score: 0,
-            level: 1,
-            wordsDestroyed: 0,
-            words: [],
-            bullets: [],
-            particles: [],
-            stars: [],
-            lastSpawnTime: 0,
-            activeTarget: null,
-            shipAngle: 0,
-            shakeTime: 0,
-            shakeIntensity: 0
-        };
-
-        function setAstronautMood(emoji, text) {
-            const avatar = document.getElementById('astro-avatar');
-            if (avatar) avatar.innerText = emoji;
-        }
-
-        function togglePause() {
-            if (!gameState.running) return;
-
-            if (!gameState.isPaused) {
-                gameState.isPaused = true;
-                sound.stopBGM();
-                document.getElementById('modal-title').innerText = 'TẠM DỪNG GAME';
-                document.getElementById('btn-start').innerText = 'TIẾP TỤC (ENTER)';
-                document.getElementById('modal-stats').classList.add('hidden');
-                document.getElementById('game-modal').classList.remove('hidden');
-                document.getElementById('hud-status').innerText = 'HỆ THỐNG TẠM DỪNG';
-            } else {
-                gameState.isPaused = false;
-                document.getElementById('game-modal').classList.add('hidden');
-                document.getElementById('hud-status').innerText = 'HỆ THỐNG PHÒNG THỦ KÍCH HOẠT';
-                sound.startBGM();
-                lastTime = performance.now();
-                requestAnimationFrame(gameLoop);
-            }
-        }
-
-        function triggerScreenShake(duration = 15, intensity = 8) {
-            gameState.shakeTime = duration;
-            gameState.shakeIntensity = intensity;
-        }
-
-        function updateHUD() {
-            document.getElementById('hud-score').innerText = gameState.score;
-            document.getElementById('hud-level').innerText = gameState.level;
-        }
-
-        function initStars() {
-            gameState.stars = [];
-            const count = Math.floor((canvas.width * canvas.height) / 4000);
-            for (let i = 0; i < count; i++) {
-                gameState.stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 0.5,
-                    alpha: Math.random(),
-                    speed: Math.random() * 0.5 + 0.1
-                });
-            }
-        }
-        initStars();
-
-        class WordItem {
-            constructor(data, offsetY = 0) {
-                this.en = data.en;
-                this.vi = data.vi;
-                this.alpha = 0;
-
-                const padding = 70;
-                if (isStealthMode) {
-                    this.x = Math.random() * (canvas.width - padding * 2) + padding;
-                    this.y = Math.random() * (canvas.height - 280) + 110; 
-                    this.baseSpeed = 0;
-                    this.speed = 0;
-                    this.vx = 0;
-                    this.vy = 0;
-                } else {
-                    this.x = Math.random() * (canvas.width - padding * 2) + padding;
-                    this.y = -60 - offsetY;
-                    this.baseSpeed = globalBaseSpeed * (1 + Math.random() * 0.1);
-                    this.speed = this.baseSpeed; 
-                    
-                    const targetX = canvas.width / 2;
-                    const targetY = canvas.height - 65;
-                    const dx = targetX - this.x;
-                    const dy = targetY - this.y;
-                    const dist = Math.hypot(dx, dy) || 1;
-                    this.vx = (dx / dist) * this.speed;
-                    this.vy = (dy / dist) * this.speed;
-                }
-
-                this.typedLength = 0;        
-                this.rotation = Math.random() * Math.PI * 2;
-                this.rotSpeed = (Math.random() - 0.5) * 0.02;
-
-                ctx.font = '800 18px "Chakra Petch", sans-serif';
-                const textWidth = ctx.measureText(this.en).width;
-                this.radiusX = Math.max(50, textWidth / 2 + 18);
-                this.radiusY = 35;
-
-                this.vertices = [];
-                const numPoints = 9;
-                for (let i = 0; i < numPoints; i++) {
-                    const angle = (i / numPoints) * Math.PI * 2;
-                    const variance = 0.82 + Math.random() * 0.36;
-                    this.vertices.push({
-                        x: Math.cos(angle) * this.radiusX * variance,
-                        y: Math.sin(angle) * this.radiusY * variance
-                    });
-                }
-            }
-
-            update(deltaTime) {
-                const timeFactor = deltaTime / 16.66;
-                if (this.alpha < 1) {
-                    this.alpha = Math.min(1, this.alpha + 0.012 * timeFactor);
-                }
-
-                if (isStealthMode) {
-                    this.rotation += this.rotSpeed * timeFactor;
-                } else if (this.speed > 0) {
-                    const targetX = canvas.width / 2;
-                    const targetY = canvas.height - 65;
-                    const dx = targetX - this.x;
-                    const dy = targetY - this.y;
-                    const dist = Math.hypot(dx, dy) || 1;
-
-                    this.vx = (dx / dist) * this.speed;
-                    this.vy = (dy / dist) * this.speed;
-
-                    this.x += this.vx * timeFactor;
-                    this.y += this.vy * timeFactor;
-                    this.rotation += this.rotSpeed * timeFactor;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
-                ctx.translate(this.x, this.y);
-                
-                const isTargeted = (gameState.activeTarget === this);
-
-                ctx.save();
-                ctx.rotate(this.rotation);
-
-                ctx.beginPath();
-                ctx.moveTo(this.vertices[0].x, this.vertices[0].y);
-                for (let i = 1; i < this.vertices.length; i++) {
-                    ctx.lineTo(this.vertices[i].x, this.vertices[i].y);
-                }
-                ctx.closePath();
-
-                const rockGrad = ctx.createRadialGradient(0, -10, 5, 0, 0, this.radiusX);
-                if (isTargeted) {
-                    rockGrad.addColorStop(0, '#1e293b');
-                    rockGrad.addColorStop(1, '#0f172a');
-                } else {
-                    rockGrad.addColorStop(0, '#334155');
-                    rockGrad.addColorStop(1, '#020617');
-                }
-                ctx.fillStyle = rockGrad;
-                ctx.fill();
-
-                ctx.strokeStyle = isTargeted ? '#22d3ee' : '#475569';
-                ctx.lineWidth = isTargeted ? 3 : 2;
-                if (isTargeted) {
-                    ctx.shadowColor = '#06b6d4';
-                    ctx.shadowBlur = 14;
-                }
-                ctx.stroke();
-
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
-                ctx.beginPath();
-                ctx.arc(-this.radiusX * 0.3, -6, 6, 0, Math.PI * 2);
-                ctx.arc(this.radiusX * 0.25, 8, 5, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.restore();
-
-                if (isTargeted) {
-                    ctx.font = '700 11px "Chakra Petch", sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillStyle = '#22d3ee';
-                    ctx.fillText('🎯 MỤC TIÊU', 0, -this.radiusY - 8);
-                }
-
-                const fullWord = this.en;
-                const typedPart = fullWord.substring(0, this.typedLength);
-                const untypedPart = fullWord.substring(this.typedLength);
-                
-                ctx.font = '800 18px "Chakra Petch", sans-serif';
-                const fullWidth = ctx.measureText(fullWord).width;
-                let startX = -fullWidth / 2;
-
-                if (typedPart) {
-                    ctx.fillStyle = '#22d3ee';
-                    ctx.shadowColor = '#06b6d4';
-                    ctx.shadowBlur = 10;
-                    ctx.textAlign = 'left';
-                    ctx.fillText(typedPart, startX, -2);
-                    startX += ctx.measureText(typedPart).width;
-                }
-
-                if (untypedPart) {
-                    ctx.fillStyle = '#ffffff';
-                    ctx.shadowBlur = 0;
-                    ctx.textAlign = 'left';
-                    ctx.fillText(untypedPart, startX, -2);
-                }
-
-                if (showTranslation) {
-                    ctx.shadowBlur = 0;
-                    ctx.textAlign = 'center';
-                    ctx.fillStyle = '#e2e8f0';
-                    ctx.font = '600 13px "Be Vietnam Pro", sans-serif';
-                    ctx.fillText(this.vi, 0, 18);
-                }
-
-                ctx.restore();
-            }
-        }
-
-        class Bullet {
-            constructor(startX, startY, targetX, targetY) {
-                this.x = startX;
-                this.y = startY;
-                this.targetX = targetX;
-                this.targetY = targetY;
-                this.speed = 30;
-                const dx = targetX - startX;
-                const dy = targetY - startY;
-                const dist = Math.hypot(dx, dy) || 1;
-                this.vx = (dx / dist) * this.speed;
-                this.vy = (dy / dist) * this.speed;
-                this.reached = false;
-            }
-            update(deltaTime) {
-                const timeFactor = deltaTime / 16.66;
-                this.x += this.vx * timeFactor;
-                this.y += this.vy * timeFactor;
-                if (Math.hypot(this.targetX - this.x, this.targetY - this.y) < this.speed) {
-                    this.reached = true;
-                }
-            }
-            draw() {
-                ctx.save();
-                ctx.strokeStyle = '#22d3ee';
-                ctx.lineWidth = 3;
-                ctx.shadowColor = '#06b6d4';
-                ctx.shadowBlur = 10;
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x - this.vx, this.y - this.vy);
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x;
-                this.y = y;
-                this.color = color;
-                this.size = Math.random() * 4 + 2;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 8 + 2;
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed;
-                this.alpha = 1;
-                this.decay = Math.random() * 0.02 + 0.015;
-            }
-            update(deltaTime) {
-                const timeFactor = deltaTime / 16.66;
-                this.x += this.vx * timeFactor;
-                this.y += this.vy * timeFactor;
-                this.alpha -= this.decay * timeFactor;
-            }
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = Math.max(0, this.alpha);
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        function spawnWord(offsetY = 0) {
-            if (!activeVocabulary || activeVocabulary.length === 0) return;
-            if (gameState.words.length >= 4) return;
-
-            const randomData = activeVocabulary[Math.floor(Math.random() * activeVocabulary.length)];
-            const word = new WordItem(randomData, offsetY);
-
-            const padding = 70;
-            const minSeparation = 110;
-            let bestX = word.x;
-            let bestY = word.y;
-            let maxMinDist = -1;
-
-            for (let attempts = 0; attempts < 20; attempts++) {
-                let candidateX = Math.random() * (canvas.width - padding * 2) + padding;
-                let candidateY = isStealthMode 
-                    ? Math.random() * (canvas.height - 280) + 110 
-                    : -60 - offsetY - (Math.random() * 30);
-
-                let closestDist = Infinity;
-                for (const existing of gameState.words) {
-                    const d = Math.hypot(existing.x - candidateX, existing.y - candidateY);
-                    if (d < closestDist) closestDist = d;
-                }
-
-                if (closestDist >= minSeparation || gameState.words.length === 0) {
-                    bestX = candidateX;
-                    bestY = candidateY;
-                    break;
-                }
-
-                if (closestDist > maxMinDist) {
-                    maxMinDist = closestDist;
-                    bestX = candidateX;
-                    bestY = candidateY;
-                }
-            }
-
-            word.x = bestX;
-            word.y = bestY;
-            gameState.words.push(word);
-        }
-
-        function resolveMeteorOverlaps() {
-            const words = gameState.words;
-            const padding = 65;
-            for (let i = 0; i < words.length; i++) {
-                for (let j = i + 1; j < words.length; j++) {
-                    const w1 = words[i];
-                    const w2 = words[j];
-                    const dx = w2.x - w1.x;
-                    const dy = w2.y - w1.y;
-                    const dist = Math.hypot(dx, dy);
-                    const minDist = w1.radiusX + w2.radiusX + 18;
-
-                    if (dist < minDist && dist > 0) {
-                        const overlap = (minDist - dist) / 2;
-                        const nx = dx / dist;
-                        const ny = dy / dist;
-
-                        w1.x -= nx * overlap;
-                        w1.y -= ny * overlap;
-                        w2.x += nx * overlap;
-                        w2.y += ny * overlap;
-
-                        w1.x = Math.max(padding, Math.min(canvas.width - padding, w1.x));
-                        w2.x = Math.max(padding, Math.min(canvas.width - padding, w2.x));
-                    }
-                }
-            }
-        }
-
-        function applyKnockback(target, distance = 28) {
-            if (isStealthMode) return;
-            const shipX = canvas.width / 2;
-            const shipY = canvas.height - 65;
-            const dx = target.x - shipX;
-            const dy = target.y - shipY;
-            const dist = Math.hypot(dx, dy) || 1;
-            
-            target.x += (dx / dist) * distance;
-            target.y += (dy / dist) * distance;
-            
-            if (target.y < -30) target.y = -30;
-            target.speed = target.baseSpeed; 
-        }
-
-        function handleInputChar(char) {
-            if (!gameState.running || gameState.isPaused) return;
-
-            char = char.toUpperCase();
-            if (char.length !== 1 || char < 'A' || char > 'Z') return; 
-
-            const shipX = canvas.width / 2;
-            const shipY = canvas.height - 45;
-
-            const getNosePos = (targetX, targetY) => {
-                const dx = targetX - shipX;
-                const dy = targetY - shipY;
-                const angle = Math.atan2(dy, dx) + Math.PI / 2;
-                return {
-                    x: shipX + Math.sin(angle) * 38,
-                    y: shipY - Math.cos(angle) * 38
-                };
-            };
-
-            if (gameState.activeTarget) {
-                const target = gameState.activeTarget;
-                if (target.alpha < 1) return;
-
-                const expectedChar = target.en[target.typedLength];
-
-                if (char === expectedChar) {
-                    target.typedLength++;
-                    applyKnockback(target, 28); 
-
-                    setAstronautMood('🎯', 'Gõ tốt lắm!');
-                    sound.playLaser();
-                    const nose = getNosePos(target.x, target.y);
-                    gameState.bullets.push(new Bullet(nose.x, nose.y, target.x, target.y));
-                    createSparks(target.x, target.y, '#22d3ee', 5);
-
-                    if (target.typedLength === target.en.length) {
-                        destroyWord(target);
-                    }
-                } else {
-                    setAstronautMood('😱', 'Gõ sai rồi!');
-                    sound.playError();
-                    createSparks(target.x, target.y, '#f43f5e', 5);
-                }
-                return;
-            }
-
-            const candidateWords = gameState.words.filter(w => w.en[0] === char && w.alpha >= 1);
-            if (candidateWords.length > 0) {
-                candidateWords.sort((a, b) => b.y - a.y);
-                const target = candidateWords[0];
-                gameState.activeTarget = target;
-                target.typedLength = 1;
-                applyKnockback(target, 28); 
-
-                setAstronautMood('🔥', 'Đang khóa mục tiêu!');
-                sound.playLaser();
-                const nose = getNosePos(target.x, target.y);
-                gameState.bullets.push(new Bullet(nose.x, nose.y, target.x, target.y));
-                createSparks(target.x, target.y, '#22d3ee', 5);
-
-                if (target.typedLength === target.en.length) {
-                    destroyWord(target);
-                }
-            } else {
-                setAstronautMood('😅', 'Trượt rồi!');
-                sound.playError();
-            }
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (gameState.running) {
-                    togglePause();
-                    return;
-                }
-            }
-
-            if (e.key === 'Enter') {
-                const aiModal = document.getElementById('ai-modal');
-                if (aiModal && !aiModal.classList.contains('hidden')) {
-                    document.getElementById('btn-ai-generate').click();
-                    return;
-                }
-
-                const gameModal = document.getElementById('game-modal');
-                if (gameModal && !gameModal.classList.contains('hidden')) {
-                    if (document.activeElement && document.activeElement.id === 'custom-vocab' && !e.ctrlKey) {
-                        return;
-                    }
-                    e.preventDefault();
-                    document.getElementById('btn-start').click();
-                    return;
-                }
-            }
-
-            if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
-                if (document.activeElement.id !== 'hidden-mobile-input') return;
-            }
-            handleInputChar(e.key);
-        });
-
-        canvas.addEventListener('click', () => {
-            const hiddenInput = document.getElementById('hidden-mobile-input');
-            if (hiddenInput && gameState.running) {
-                hiddenInput.focus();
-            }
-        });
-
-        document.getElementById('hidden-mobile-input').addEventListener('input', (e) => {
-            const val = e.target.value;
-            if (val.length > 0) {
-                const char = val[val.length - 1];
-                handleInputChar(char);
-                e.target.value = '';
-            }
-        });
-
-        function createSparks(x, y, color, count = 10) {
-            for (let i = 0; i < count; i++) {
-                gameState.particles.push(new Particle(x, y, color));
-            }
-        }
-
-        function destroyWord(word) {
-            sound.playExplosion();
-            sound.speak(word.en);
-            triggerScreenShake(10, 6);
-            createSparks(word.x, word.y, '#22d3ee', 25);
-            createSparks(word.x, word.y, '#f43f5e', 10);
-
-            gameState.score += 100;
-            gameState.wordsDestroyed++;
-
-            if (gameState.wordsDestroyed > 0 && gameState.wordsDestroyed % 10 === 0) {
-                gameState.level++;
-                setAstronautMood('🚀', \`Thăng cấp \${gameState.level}!\`);
-            } else {
-                setAstronautMood('😎', 'Tiêu diệt mục tiêu!');
-            }
-            updateHUD();
-
-            gameState.words = gameState.words.filter(w => w !== word);
-            if (gameState.activeTarget === word) {
-                gameState.activeTarget = null;
-            }
-
-            if (gameState.words.length === 0) {
-                spawnWord();
-                gameState.lastSpawnTime = performance.now();
-            }
-        }
-
-        function drawSpaceship() {
-            const shipX = canvas.width / 2;
-            const shipY = canvas.height - 65;
-
-            let targetAngle = 0;
-            if (gameState.activeTarget) {
-                const dx = gameState.activeTarget.x - shipX;
-                const dy = gameState.activeTarget.y - shipY;
-                targetAngle = Math.atan2(dy, dx) + Math.PI / 2;
-            }
-
-            let angleDiff = targetAngle - gameState.shipAngle;
-            while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-            while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-            gameState.shipAngle += angleDiff * 0.22;
-
-            ctx.save();
-            ctx.translate(shipX, shipY);
-            ctx.rotate(gameState.shipAngle);
-
-            const flameLen = 18 + Math.random() * 10;
-            const flameGrad = ctx.createLinearGradient(0, 12, 0, 12 + flameLen);
-            flameGrad.addColorStop(0, '#38bdf8');
-            flameGrad.addColorStop(0.3, '#22d3ee');
-            flameGrad.addColorStop(0.7, '#f43f5e');
-            flameGrad.addColorStop(1, 'transparent');
-
-            ctx.fillStyle = flameGrad;
-            ctx.beginPath();
-            ctx.moveTo(-8, 12);
-            ctx.lineTo(0, 12 + flameLen);
-            ctx.lineTo(8, 12);
-            ctx.closePath();
-            ctx.fill();
-
-            const hullGrad = ctx.createLinearGradient(0, -30, 0, 18);
-            hullGrad.addColorStop(0, '#38bdf8');
-            hullGrad.addColorStop(0.35, '#090d16');
-            hullGrad.addColorStop(0.85, '#0f172a');
-            hullGrad.addColorStop(1, '#0284c7');
-
-            ctx.fillStyle = hullGrad;
-            ctx.strokeStyle = '#38bdf8';
-            ctx.lineWidth = 2;
-            ctx.shadowColor = '#38bdf8';
-            ctx.shadowBlur = 12;
-
-            ctx.beginPath();
-            ctx.moveTo(0, -30); 
-            ctx.lineTo(10, -4);
-            ctx.lineTo(10, 14);
-            ctx.lineTo(0, 18);
-            ctx.lineTo(-10, 14);
-            ctx.lineTo(-10, -4);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.restore();
-        }
-
-        let lastTime = 0;
-        function gameLoop(timestamp) {
-            if (!gameState.running || gameState.isPaused) return;
-            const deltaTime = timestamp - lastTime;
-            lastTime = timestamp;
-
-            ctx.save();
-
-            if (gameState.shakeTime > 0) {
-                const offsetX = (Math.random() - 0.5) * gameState.shakeIntensity;
-                const offsetY = (Math.random() - 0.5) * gameState.shakeIntensity;
-                ctx.translate(offsetX, offsetY);
-                gameState.shakeTime--;
-            }
-
-            ctx.fillStyle = '#030712';
-            ctx.fillRect(-20, -20, canvas.width + 40, canvas.height + 40);
-
-            ctx.fillStyle = '#ffffff';
-            gameState.stars.forEach(star => {
-                star.y += star.speed * (deltaTime / 16.66);
-                if (star.y > canvas.height) star.y = 0;
-                ctx.globalAlpha = star.alpha;
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-
-            const shipX = canvas.width / 2;
-            const shipY = canvas.height - 45;
-
-            if (timestamp - gameState.lastSpawnTime >= globalSpawnInterval) {
-                spawnWord();
-                gameState.lastSpawnTime = timestamp;
-            }
-
-            resolveMeteorOverlaps();
-
-            let gameOverTriggered = false;
-
-            for (let i = gameState.words.length - 1; i >= 0; i--) {
-                const word = gameState.words[i];
-                word.update(deltaTime);
-                word.draw();
-                
-                if (!isStealthMode) {
-                    const distToShip = Math.hypot(word.x - shipX, word.y - shipY);
-                    if (distToShip <= 65) {
-                        gameOverTriggered = true;
-                    }
-                }
-            }
-
-            for (let i = gameState.bullets.length - 1; i >= 0; i--) {
-                const b = gameState.bullets[i];
-                b.update(deltaTime);
-                b.draw();
-                if (b.reached) gameState.bullets.splice(i, 1);
-            }
-
-            for (let i = gameState.particles.length - 1; i >= 0; i--) {
-                const p = gameState.particles[i];
-                p.update(deltaTime);
-                p.draw();
-                if (p.alpha <= 0) gameState.particles.splice(i, 1);
-            }
-
-            drawSpaceship();
-
-            ctx.restore();
-
-            if (gameOverTriggered) {
-                createSparks(shipX, shipY, '#f43f5e', 80);
-                endGame();
-            } else {
-                requestAnimationFrame(gameLoop);
-            }
-        }
-
-        function parseVocabulary(input) {
-            const lines = input.split('\\n');
-            const parsed = [];
-            
-            for (const line of lines) {
-                if (!line.trim()) continue;
-                const parts = line.split(/[:\-]/);
-                let en = parts[0].replace(/[^A-Za-z]/g, '').toUpperCase();
-                let vi = parts.length > 1 ? parts.slice(1).join(':').trim() : 'TỰ CHỌN';
-                
-                if (en.length > 0) {
-                    parsed.push({ en, vi });
-                }
-            }
-            return parsed;
-        }
-
-        function startGame() {
-            if (gameState.isPaused) {
-                togglePause();
-                return;
-            }
-            gameState.running = true;
-            gameState.isPaused = false;
-            gameState.score = 0;
-            gameState.level = 1;
-            gameState.wordsDestroyed = 0;
-            gameState.words = [];
-            gameState.bullets = [];
-            gameState.particles = [];
-            gameState.activeTarget = null;
-            gameState.lastSpawnTime = performance.now();
-
-            setAstronautMood('👨‍🚀', 'Sẵn sàng chiến đấu!');
-            updateHUD();
-            document.getElementById('game-modal').classList.add('hidden');
-            document.getElementById('hud-status').innerText = 'HỆ THỐNG PHÒNG THỦ KÍCH HOẠT';
-
-            spawnWord(0);
-            spawnWord(50);
-
-            sound.startBGM();
-            lastTime = performance.now();
-            requestAnimationFrame(gameLoop);
-        }
-
-        function endGame() {
-            gameState.running = false;
-            gameState.isPaused = false;
-            sound.stopBGM();
-            setAstronautMood('💥', 'Tàu đã bị va chạm!');
-
-            document.getElementById('stat-score').innerText = gameState.score;
-            document.getElementById('modal-stats').classList.remove('hidden');
-
-            document.getElementById('modal-title').innerText = 'HỆ THỐNG BỊ PHÁ HỦY';
-            document.getElementById('btn-start').innerText = 'TÁI KHỞI ĐỘNG HỆ THỐNG (ENTER)';
-
-            document.getElementById('game-modal').classList.remove('hidden');
-            document.getElementById('hud-status').innerText = 'HỆ THỐNG TẠM DỪNG';
-        }
-
-        document.getElementById('btn-start').addEventListener('click', () => {
-            const speedInputVal = parseFloat(document.getElementById('fall-speed-input').value);
-            if (!isNaN(speedInputVal) && speedInputVal > 0) {
-                globalBaseSpeed = speedInputVal;
-            }
-
-            const spawnInputVal = parseFloat(document.getElementById('spawn-interval-input').value);
-            if (!isNaN(spawnInputVal) && spawnInputVal > 0) {
-                globalSpawnInterval = spawnInputVal * 1000;
-            }
-
-            const transToggle = document.getElementById('translation-toggle');
-            if (transToggle) {
-                showTranslation = transToggle.checked;
-            }
-
-            const stealthToggle = document.getElementById('stealth-mode-toggle');
-            if (stealthToggle) {
-                isStealthMode = stealthToggle.checked;
-            }
-
-            const vocabInput = document.getElementById('custom-vocab').value;
-            const customList = parseVocabulary(vocabInput);
-            
-            if (customList.length > 0) {
-                activeVocabulary = customList;
-            } else {
-                activeVocabulary = [...DEFAULT_VOCABULARY];
-            }
-
-            sound.init();
-            startGame();
-        });
-
-        document.getElementById('btn-audio').addEventListener('click', () => {
-            sound.isMuted = !sound.isMuted;
-            document.getElementById('audio-icon').innerText = sound.isMuted ? '🔇' : '🔊';
-            document.getElementById('audio-text').innerText = sound.isMuted ? 'TẮT ÂM' : 'EDM BẬT';
-            
-            if (sound.isMuted) {
-                sound.stopBGM();
-            } else if (gameState.running) {
-                sound.startBGM();
-            }
-        });
-
-        document.getElementById('translation-toggle').addEventListener('change', (e) => {
-            showTranslation = e.target.checked;
-        });
-
-        document.getElementById('bgm-volume-slider').addEventListener('input', (e) => {
-            const val = parseInt(e.target.value, 10);
-            sound.bgmVolume = val / 100;
-            document.getElementById('bgm-vol-text').innerText = \`\${val}%\`;
-
-            sound.init();
-            if (sound.bgmVolume > 0 && !sound.isMuted) {
-                sound.startBGM();
-            } else if (sound.bgmVolume === 0) {
-                sound.stopBGM();
-            }
-        });
-    <\/script>
-</body>
-</html>`;
-
-        // Inject inner game code into Iframe on load
-        function loadIframeGame() {
-            const iframe = document.getElementById('game-iframe');
-            if (iframe) {
-                iframe.srcdoc = INNER_GAME_HTML;
-            }
-        }
-        window.addEventListener('DOMContentLoaded', loadIframeGame);
-
-        function reloadGame() {
-            loadIframeGame();
-        }
-
-        function toggleCabinetFullscreen() {
-            const elem = document.getElementById('cabinet-wrapper');
-            if (!document.fullscreenElement) {
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) {
-                    elem.webkitRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
-
-        const PRESET_VOCABULARIES = {
-            ielts: [
-                "HYPOTHESIS : Giả thuyết",
-                "ANALYZE : Phân tích",
-                "PHENOMENON : Hiện tượng",
-                "EVALUATE : Đánh giá",
-                "SIGNIFICANT : Quan trọng",
-                "PERSPECTIVE : Góc nhìn",
-                "CRITICAL : Critical / Phê bình",
-                "SYNTHESIZE : Tổng hợp",
-                "METHODOLOGY : Phương pháp học",
-                "ESTABLISH : Thiết lập"
-            ].join('\n'),
-            tech: [
-                "MATRIX : Ma trận",
-                "QUANTUM : Lượng tử",
-                "FIREWALL : Tường lửa",
-                "ALGORITHM : Thuật toán",
-                "CYBERSECURITY : An ninh mạng",
-                "BLOCKCHAIN : Chuỗi khối",
-                "DATABASE : Cơ sở dữ liệu",
-                "SYNAPSE : Khớp thần kinh",
-                "ENCRYPTION : Mã hóa",
-                "PROCESSOR : Bộ xử lý"
-            ].join('\n'),
-            daily: [
-                "AIRPORT : Sân bay",
-                "RESTAURANT : Nhà hàng",
-                "SCHEDULE : Lịch trình",
-                "BEAUTIFUL : Xinh đẹp",
-                "EXPERIENCE : Trải nghiệm",
-                "JOURNEY : Hành trình",
-                "DELICIOUS : Thơm ngon",
-                "FRIENDSHIP : Tình bạn",
-                "VACATION : Kỳ nghỉ",
-                "HOSPITAL : Bệnh viện"
-            ].join('\n')
-        };
-
-        function loadPresetVocab(type) {
-            const preset = PRESET_VOCABULARIES[type];
-            if (!preset) return;
-
-            const playZone = document.getElementById('play-zone');
-            playZone.scrollIntoView({ behavior: 'smooth' });
-
-            setTimeout(() => {
-                const iframe = document.getElementById('game-iframe');
-                if (iframe && iframe.contentWindow) {
-                    const doc = iframe.contentWindow.document;
-                    const customVocabArea = doc.getElementById('custom-vocab');
-                    if (customVocabArea) {
-                        customVocabArea.value = preset;
-                        customVocabArea.style.borderColor = '#22d3ee';
-                        setTimeout(() => { customVocabArea.style.borderColor = ''; }, 1000);
-                    }
-                }
-            }, 500);
-        }
-
-        function scrollToGuide() {
-            document.getElementById('deploy-guide').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function openDeployModal() {
-            document.getElementById('deploy-modal').classList.remove('hidden');
-        }
-
-        function closeDeployModal() {
-            document.getElementById('deploy-modal').classList.add('hidden');
-        }
-    </script>
+    <!-- SIDEBAR CONTROL -->
+    <div class="sidebar">
+      
+      <!-- BỘ TỪ VỰNG NẠP NHANH -->
+      <div class="panel-card">
+        <div class="panel-title">📚 Kho Từ Vựng Nạp Nhanh</div>
+        <div class="vocab-list">
+          <button class="vocab-btn" onclick="loadVocab('IELTS')">
+            <span>🔥 IELTS Cơ Bản</span>
+            <span class="vocab-tag">8 Từ</span>
+          </button>
+          <button class="vocab-btn" onclick="loadVocab('TECH')">
+            <span>💻 Công Nghệ Tech</span>
+            <span class="vocab-tag">8 Từ</span>
+          </button>
+          <button class="vocab-btn" onclick="loadVocab('DAILY')">
+            <span>🗣️ Giao Tiếp Hằng Ngày</span>
+            <span class="vocab-tag">8 Từ</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- BẢNG XẾP HẠNG -->
+      <div class="panel-card">
+        <div class="panel-title">🏆 Bảng Điểm Cao</div>
+        <div id="leaderboard">
+          <div class="leaderboard-item"><span>1. CyberCommander</span><span class="score-val">1200</span></div>
+          <div class="leaderboard-item"><span>2. SpaceRider</span><span class="score-val">950</span></div>
+          <div class="leaderboard-item"><span>3. TypingMaster</span><span class="score-val">800</span></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Space Typing Defender &copy; 2026 - Phát triển trên HTML5 Canvas & Web Audio API</p>
+  </footer>
+
+  <script>
+    // Hàm nạp từ vựng vào iframe game
+    function loadVocab(type) {
+      const iframe = document.getElementById('gameFrame');
+      const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+      const vocabInput = innerDoc.getElementById('vocabInput');
+
+      let text = "";
+      if (type === 'IELTS') {
+        text = "ACQUIRE : Lĩnh hội\nANALYZE : Phân tích\nCRUCIAL : Quan trọng\nEVALUATE : Đánh giá\nINDICATE : Chỉ ra\nOBTAIN : Đạt được\nPREDICT : Dự đoán\nREQUIRE : Yêu cầu";
+      } else if (type === 'TECH') {
+        text = "ALGORITHM : Thuật toán\nDATABASE : Cơ sở dữ liệu\nNETWORK : Mạng máy tính\nSOFTWARE : Phần mềm\nHARDWARE : Phần cứng\nSECURITY : Bảo mật\nSERVER : Máy chủ\nCOMPILER : Trình biên dịch";
+      } else if (type === 'DAILY') {
+        text = "ALWAYS : Luôn luôn\nBEAUTIFUL : Đẹp đẽ\nDELICIOUS : Ngon miệng\nFRIENDLY : Thân thiện\nHAPPY : Hạnh phúc\nMORNING : Buổi sáng\nTOGETHER : Cùng nhau\nWELCOME : Chào mừng";
+      }
+
+      if (vocabInput) {
+        vocabInput.value = text;
+        alert("Đã nạp bộ từ vựng " + type + " thành công! Hãy nhấn 'BẮT ĐẦU NHIỆM VỤ' trong game.");
+      }
+    }
+
+    // Tải lại iframe
+    function reloadGame() {
+      const iframe = document.getElementById('gameFrame');
+      iframe.srcdoc = iframe.srcdoc;
+    }
+  </script>
 </body>
 </html>
